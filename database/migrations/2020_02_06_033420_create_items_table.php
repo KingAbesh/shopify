@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->float('price');
             $table->string('image');
             $table->text('description');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('user_id')
