@@ -78,7 +78,7 @@ class CartController extends Controller
         return response()->json([
             "success" => false,
             "message" => "An error was encountered while carrying out this action",
-        ]);
+        ], 401);
 
     }
 }
