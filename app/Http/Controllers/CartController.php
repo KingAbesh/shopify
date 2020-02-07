@@ -81,4 +81,19 @@ class CartController extends Controller
         ], 401);
 
     }
+    public function clear_cart()
+    {
+
+        if (User::findOrFail(1)->cart()->delete()) {
+            return response()->json([
+                "success" => true,
+                "message" => "Cart successfully cleared",
+            ], 200);
+        }
+        return response()->json([
+            "success" => false,
+            "message" => "An error was encountered while carrying out this action",
+        ], 401);
+
+    }
 }

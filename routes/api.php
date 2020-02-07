@@ -21,3 +21,4 @@ Route::get('items', 'ItemController@index');
 Route::get('cart', 'CartController@index');
 Route::post('add-to-cart/{id}', 'CartController@store');
 Route::delete('remove-from-cart/{id}', 'CartController@destroy');
+Route::delete('clear-cart', 'CartController@clear_cart');
