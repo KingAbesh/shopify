@@ -10,7 +10,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cart = User::findOrFail(1)->cart;
+        $cart = Cart::where('user_id', 1)->get();
 
         return response()->json([
             "success" => true,
