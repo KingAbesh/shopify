@@ -8,6 +8,10 @@ use App\User;
 
 class CartController extends Controller
 {
+
+    /**
+     * ! Gets all items in a user's cart
+     */
     public function index()
     {
         $cart = Cart::where('user_id', 1)->get();
@@ -51,5 +55,30 @@ class CartController extends Controller
                 "message" => "Item successfully added to cart",
             ], 200);
         }
+    }
+
+    public function destroy($id)
+    {
+        $item = Item::find($id);
+
+        if (!$item) {
+            return response()->json([
+                "success" => false,
+                "message" => "Item does not exist",
+            ], 404);
+        }
+
+        $cart = User::findOrFail(1)->cart()->where("item_id", $item->id)->first();
+        if ($cart->delete()) {
+            return response()->json([
+                "success" => true,
+                "message" => "Item successfully removed from cart",
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "message" => "An error was encountered while carrying out this action",
+        ]);
+
     }
 }
