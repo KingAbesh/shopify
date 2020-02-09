@@ -16,9 +16,18 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', 1)->get();
 
+        $item = Item::find(1)->carts;
+
+        if(!$cart) {
+            return response()->json([
+                "success" => false,
+                "message" => 'You have no items in your cart'
+            ]);
+        }
         return response()->json([
             "success" => true,
             "data" => $cart,
+            "item" => $item
         ], 200);
     }
 
@@ -48,7 +57,7 @@ class CartController extends Controller
                 "message" => "Item successfully added to cart",
             ]);
         } else {
-            $cart->quantity = $cart->quantity + 1;
+            $cart->quantity += 1;
             $cart->save();
             return response()->json([
                 "success" => true,

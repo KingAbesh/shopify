@@ -2,11 +2,12 @@
 
 namespace App;
 
+use App\Cart;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
     public function carts() {
-        $this->belongsToMany('App\Cart');
+        return $this->belongsToMany(Cart::class, 'cart_item')->withTimeStamps();
     }
 }
