@@ -19,7 +19,7 @@ class CartController extends Controller
         $arr = [];
 
         foreach (Cart::all() as $cartitem) {
-            array_push($arr, Item::where('id', $cartitem->item_id)->first());
+            array_push($arr, Item::where('cart_id', $cartitem->item_id)->first());
         }
 
         if (!$cart) {
