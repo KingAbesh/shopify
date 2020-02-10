@@ -14,20 +14,24 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::where('user_id', 1)->get();
+        $cart = User::find(1)->cart;
 
-        $item = Cart::where('id', 1)->first()->items;
+        $arr = [];
 
-        if(!$cart) {
+        foreach (Cart::all() as $cartitem) {
+            array_push($arr, Item::where('id', $cartitem->item_id)->first());
+        }
+
+        if (!$cart) {
             return response()->json([
                 "success" => false,
-                "message" => 'You have no items in your cart'
+                "message" => 'You have no items in your cart',
             ]);
         }
         return response()->json([
             "success" => true,
             "data" => $cart,
-            "item" => $item
+            "item" => $arr,
         ], 200);
     }
 
