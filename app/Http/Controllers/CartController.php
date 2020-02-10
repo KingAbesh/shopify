@@ -16,12 +16,6 @@ class CartController extends Controller
     {
         $cart = User::find(1)->cart;
 
-        $arr = [];
-
-        foreach (Cart::all() as $cartitem) {
-            array_push($arr, Item::where('cart_id', $cartitem->item_id)->first());
-        }
-
         if (!$cart) {
             return response()->json([
                 "success" => false,
@@ -30,8 +24,7 @@ class CartController extends Controller
         }
         return response()->json([
             "success" => true,
-            "data" => $cart,
-            "item" => $arr,
+            "data" => $cart
         ], 200);
     }
 
