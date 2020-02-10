@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     public function carts() {
-        return $this->belongsToMany(Cart::class, 'cart_item')->withTimeStamps();
+        return $this->belongsToMany(Cart::class)->withTimeStamps();
     }
 }
