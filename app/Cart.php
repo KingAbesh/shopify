@@ -10,6 +10,10 @@ class Cart extends Model
     protected $guarded = [];
 
     public function items() {
-        return $this->belongsToMany(Item::class)->withTimeStamps();
+        return $this->hasMany(Item::class);
+    }
+
+    public function user() {
+        return $this->belongsTo('App\User');
     }
 }

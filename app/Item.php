@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    public function carts() {
-        return $this->belongsToMany(Cart::class)->withTimeStamps();
+    public function cart() {
+        return $this->belongsTo(Cart::class);
     }
 }

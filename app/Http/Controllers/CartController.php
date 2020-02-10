@@ -16,7 +16,7 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', 1)->get();
 
-        $item = Cart::where('id', 1)->firstOrFail()->items;
+        $item = Cart::where('id', 1)->first()->items;
 
         if(!$cart) {
             return response()->json([
