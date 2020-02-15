@@ -14,7 +14,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = User::findOrFail(1)->orders . toArray();
+        $cart = User::findOrFail(1)->orders;
 
         if (!$cart) {
             return response()->json([
@@ -24,7 +24,7 @@ class CartController extends Controller
         }
         return response()->json([
             "success" => true,
-            "data" => $cart,
+            "data" => $cart
         ], 200);
     }
 

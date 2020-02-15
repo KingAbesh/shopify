@@ -20,9 +20,8 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->timestamps();
-            $table->integer('cart_id')->unsigned()->nullable();
-            $table->foreign('cart_id')->references('id')->on('carts');
-
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
