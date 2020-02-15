@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
 use App\Item;
+use App\Order;
 use App\User;
 
 class CartController extends Controller
@@ -14,7 +14,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = User::find(1)->cart;
+        $cart = User::findOrFail(1)->orders . toArray();
 
         if (!$cart) {
             return response()->json([
@@ -24,7 +24,7 @@ class CartController extends Controller
         }
         return response()->json([
             "success" => true,
-            "data" => $cart
+            "data" => $cart,
         ], 200);
     }
 
@@ -39,23 +39,23 @@ class CartController extends Controller
             ], 404);
         }
 
-        $cart = User::findOrFail(1)->cart()->where("item_id", $item->id)->first();
-        if (!User::findOrFail(1)->cart()->where("item_id", $item->id)->exists()) {
-            $cart = Cart::create([
+        $order = User::findOrFail(1)->orders()->where("item_id", $item->id)->first();
+        if (!User::findOrFail(1)->orders()->where("item_id", $item->id)->exists()) {
+            $order = Order::create([
                 "quantity" => 1,
                 "name" => $item->name,
                 "price" => $item->price,
                 "user_id" => User::find(1)->id,
                 "item_id" => $item->id,
             ]);
-            $cart->save();
+            $order->save();
             return response()->json([
                 "success" => true,
                 "message" => "Item successfully added to cart",
             ]);
         } else {
-            $cart->quantity += 1;
-            $cart->save();
+            $order->quantity += 1;
+            $order->save();
             return response()->json([
                 "success" => true,
                 "message" => "Item successfully added to cart",
@@ -74,7 +74,7 @@ class CartController extends Controller
             ], 404);
         }
 
-        $cart = User::findOrFail(1)->cart()->where("item_id", $item->id)->first();
+        $cart = User::findOrFail(1)->orders()->where("item_id", $item->id)->first();
         if ($cart->delete()) {
             return response()->json([
                 "success" => true,
@@ -90,7 +90,7 @@ class CartController extends Controller
     public function clear_cart()
     {
 
-        if (User::findOrFail(1)->cart()->delete()) {
+        if (User::findOrFail(1)->orders()->delete()) {
             return response()->json([
                 "success" => true,
                 "message" => "Cart successfully cleared",
